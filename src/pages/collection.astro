@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MachineCard from '../components/MachineCard.astro';
+import { getCollection } from 'astro:content';
+
+const machines = await getCollection('machines');
+const current = machines.filter((m) => m.data.status === 'current');
+const previous = machines.filter((m) => m.data.status === 'previous');
+---
+<BaseLayout title="Collection">
+  <h1>Collection</h1>
+
+  <section>
+    <h2>Current Collection</h2>
+    <div class="machine-grid">
+      {current.map((machine) => <MachineCard machine={machine} />)}
+    </div>
+  </section>
+
+  <section>
+    <h2>Previously Owned</h2>
+    <div class="machine-grid">
+      {previous.map((machine) => <MachineCard machine={machine} />)}
+    </div>
+  </section>
+</BaseLayout>
