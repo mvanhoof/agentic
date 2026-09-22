@@ -1,0 +1,14 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  machine: CollectionEntry<'machines'>;
+}
+const { machine } = Astro.props;
+const { name, year, manufacturer, coverImage } = machine.data;
+---
+<a class="machine-card" href={`/machines/${machine.slug}`}>
+  <img src={coverImage} alt={name} />
+  <h3>{name}</h3>
+  <p>{manufacturer} · {year}</p>
+</a>

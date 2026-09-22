@@ -1,6 +1,36 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import MachineCard from '../components/MachineCard.astro';
+import { getCollection } from 'astro:content';
+
+const machines = await getCollection('machines');
+const current = machines.filter((m) => m.data.status === 'current');
+const previous = machines.filter((m) => m.data.status === 'previous');
+const featured = current[0] ?? machines[0];
 ---
 <BaseLayout title="Home">
-  <h1>Pinball Collection</h1>
+  <section class="hero">
+    <h1>My Pinball Collection</h1>
+    <p>A running record of every machine that's passed through my garage.</p>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <span class="stat-value">{current.length}</span>
+      <span class="stat-label">Current</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">{previous.length}</span>
+      <span class="stat-label">Previously Owned</span>
+    </div>
+  </section>
+
+  {featured && (
+    <section class="featured">
+      <h2>Featured</h2>
+      <div class="machine-grid">
+        <MachineCard machine={featured} />
+      </div>
+    </section>
+  )}
 </BaseLayout>
