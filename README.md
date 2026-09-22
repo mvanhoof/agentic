@@ -19,5 +19,5 @@ npm run dev
    your personal story/notes.
 2. Add its photos under `public/images/<slug>/`.
 3. `npm run build` locally to confirm the schema validates.
-4. Commit and push to `main` — GitHub Actions builds and deploys
+4. Commit and push to `master` — GitHub Actions builds and deploys
    automatically.
