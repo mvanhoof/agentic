@@ -31,6 +31,9 @@ pricePaid: 3200
 priceSold: null         # set when status is "previous"
 ipdbUrl: https://ipdb.org/machine.cgi?id=1231
 mods: ["Cliffy protectors", "LED kit"]
+description: >
+  Sci-fi themed machine designed by Pat Lawlor, released 1993. Known for its
+  clock-based multiball and infamous Gumball multiball.
 coverImage: /images/twilight-zone/cover.jpg
 gallery:
   - /images/twilight-zone/cabinet.jpg
@@ -39,6 +42,11 @@ gallery:
 Free-text Markdown body: personal story, why it was bought, memories,
 restoration notes.
 ```
+
+`description` is factual/reference text about the machine itself (theme,
+designer, notable rules) — separate from the Markdown body, which is
+Maarten's personal notes/story. The detail page renders both, in that order:
+description first, then personal story.
 
 Content collection schema (Zod, in `src/content/config.ts`) enforces required
 fields and types; `soldDate`/`priceSold` are optional (present only when
@@ -59,7 +67,7 @@ adding a machine means adding one Markdown file plus its photo files, then
   - Each card: cover image, name, year, manufacturer. Click → detail page.
 - **`/machines/[slug]`** — Detail page for one machine: image gallery, all
   frontmatter fields rendered (manufacturer, year, dates, prices, mods list,
-  IPDB link), and the Markdown story body.
+  IPDB link, description), and the Markdown story body.
 - **Nav:** Home / Collection. No search or filter (collection is small-scale,
   browsing two grouped grids is sufficient). No About/contact page.
 
