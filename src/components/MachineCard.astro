@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../lib/paths';
 
 interface Props {
   machine: CollectionEntry<'machines'>;
@@ -7,8 +8,8 @@ interface Props {
 const { machine } = Astro.props;
 const { name, year, manufacturer, coverImage } = machine.data;
 ---
-<a class="machine-card" href={`/machines/${machine.slug}`}>
-  <img src={coverImage} alt={name} />
+<a class="machine-card" href={withBase(`/machines/${machine.slug}`)}>
+  <img src={withBase(coverImage)} alt={name} />
   <h3>{name}</h3>
   <p>{manufacturer} · {year}</p>
 </a>

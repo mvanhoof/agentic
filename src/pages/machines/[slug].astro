@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { withBase } from '../../lib/paths';
 
 export async function getStaticPaths() {
   const machines = await getCollection('machines');
@@ -34,8 +35,8 @@ const {
     <p class="meta">{manufacturer} · {year}</p>
 
     <div class="gallery">
-      <img src={coverImage} alt={name} />
-      {gallery.map((src) => <img src={src} alt={name} />)}
+      <img src={withBase(coverImage)} alt={name} />
+      {gallery.map((src) => <img src={withBase(src)} alt={name} />)}
     </div>
 
     <dl class="facts">
