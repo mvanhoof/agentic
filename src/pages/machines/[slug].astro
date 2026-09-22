@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const machines = await getCollection('machines');
+  return machines.map((machine) => ({
+    params: { slug: machine.slug },
+    props: { machine },
+  }));
+}
+
+const { machine } = Astro.props;
+const { Content } = await machine.render();
+const {
+  name,
+  manufacturer,
+  year,
+  status,
+  acquiredDate,
+  soldDate,
+  pricePaid,
+  priceSold,
+  ipdbUrl,
+  mods,
+  description,
+  coverImage,
+  gallery,
+} = machine.data;
+---
+<BaseLayout title={name}>
+  <article class="machine-detail">
+    <h1>{name}</h1>
+    <p class="meta">{manufacturer} · {year}</p>
+
+    <div class="gallery">
+      <img src={coverImage} alt={name} />
+      {gallery.map((src) => <img src={src} alt={name} />)}
+    </div>
+
+    <dl class="facts">
+      <dt>Status</dt>
+      <dd>{status === 'current' ? 'Current' : 'Previously Owned'}</dd>
+
+      <dt>Acquired</dt>
+      <dd>{acquiredDate.toDateString()}</dd>
+
+      {soldDate && (
+        <>
+          <dt>Sold</dt>
+          <dd>{soldDate.toDateString()}</dd>
+        </>
+      )}
+
+      <dt>Price Paid</dt>
+      <dd>${pricePaid}</dd>
+
+      {priceSold != null && (
+        <>
+          <dt>Price Sold</dt>
+          <dd>${priceSold}</dd>
+        </>
+      )}
+
+      <dt>IPDB</dt>
+      <dd><a href={ipdbUrl}>{ipdbUrl}</a></dd>
+
+      {mods.length > 0 && (
+        <>
+          <dt>Mods</dt>
+          <dd>{mods.join(', ')}</dd>
+        </>
+      )}
+    </dl>
+
+    <section class="description">
+      <p>{description}</p>
+    </section>
+
+    <section class="story">
+      <Content />
+    </section>
+  </article>
+</BaseLayout>
